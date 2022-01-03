@@ -1,0 +1,23 @@
+schema-version: 1.0
+
+description: |
+  The GMP package contains math libraries. These have useful functions for arbitrary precision arithmetic.
+
+  Installed Libraries: libgmp.so and libgmpxx.so
+  Installed directory: /usr/share/doc/gmp-6.2.1
+
+  Short Descriptions:
+    libgmp: Contains precision math functions
+    libgmpxx: Contains C++ precision math functions
+
+builder: ./gmp-builder
+
+var:
+  version: 6.2.1
+
+
+provision:
+  - copy:
+      builder: gmp
+      todir: /
+  - shell: rm /lib/x86_64-linux-gnu/{libgmp.so.10,libgmp.so.10.4.0}
