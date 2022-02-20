@@ -1,5 +1,7 @@
 schema-version: 1.0
 
+type: builder
+
 description: |
   The GMP package contains math libraries. These have useful functions for arbitrary precision arithmetic.
 
@@ -10,14 +12,31 @@ description: |
     libgmp: Contains precision math functions
     libgmpxx: Contains C++ precision math functions
 
-builder: ./gmp-builder
-
-var:
+in:
   version: 6.2.1
 
+dependencies:
+  - m4
+  - texinfo
+  - perl
 
 provision:
-  - copy:
-      builder: gmp
-      todir: /
-  - shell: rm /lib/x86_64-linux-gnu/{libgmp.so.10,libgmp.so.10.4.0}
+  - url:
+      from: https://ftp.gnu.org/gnu/gmp/gmp-{% version %}.tar.xz
+      todir: "{% xbeeSrc %}"
+  - env: PERL5LIB=/usr/share/texinfo:/usr/share/texinfo/lib/libintl-perl/lib:/usr/share/texinfo/lib/Text-Unidecode/lib:/usr/share/texinfo/lib/Unicode-EastAsianWidth/lib
+#   - shell: rm /lib/x86_64-linux-gnu/{libgmp.so.10,libgmp.so.10.4.0}
+
+build:
+  - shell:
+      cmds:
+        - ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/gmp-{% version %}
+        - make
+        - make html
+#       - make check 2>&1 | tee gmp-check-log
+#        - awk '/# PASS:/{total+=$3} ; END{print total}' gmp-check-log
+        - make install DESTDIR={% xbeeOut %}
+        - make install-html DESTDIR={% xbeeOut %}
+      directory: "{% xbeeSrc %}/gmp-{% version %}"
+
+
