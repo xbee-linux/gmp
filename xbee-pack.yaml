@@ -12,7 +12,7 @@ description: |
     libgmp: Contains precision math functions
     libgmpxx: Contains C++ precision math functions
 
-in:
+var:
   version: 6.2.1
 
 dependencies:
@@ -22,21 +22,21 @@ dependencies:
 
 provision:
   - url:
-      from: https://ftp.gnu.org/gnu/gmp/gmp-{% version %}.tar.xz
-      todir: "{% xbeeSrc %}"
+      from: https://ftp.gnu.org/gnu/gmp/gmp-{{ .version }}.tar.xz
+      todir: "{{ .xbee.src }}"
   - env: PERL5LIB=/usr/share/texinfo:/usr/share/texinfo/lib/libintl-perl/lib:/usr/share/texinfo/lib/Text-Unidecode/lib:/usr/share/texinfo/lib/Unicode-EastAsianWidth/lib
 #   - shell: rm /lib/x86_64-linux-gnu/{libgmp.so.10,libgmp.so.10.4.0}
 
 build:
   - shell:
       cmds:
-        - ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/gmp-{% version %}
+        - ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/gmp-{{ .version }}
         - make
         - make html
 #       - make check 2>&1 | tee gmp-check-log
 #        - awk '/# PASS:/{total+=$3} ; END{print total}' gmp-check-log
-        - make install DESTDIR={% xbeeOut %}
-        - make install-html DESTDIR={% xbeeOut %}
-      directory: "{% xbeeSrc %}/gmp-{% version %}"
+        - make install DESTDIR={{ .xbee.out }}
+        - make install-html DESTDIR={{ .xbee.out }}
+      directory: "{{ .xbee.src }}/gmp-{{ .version }}"
 
 
