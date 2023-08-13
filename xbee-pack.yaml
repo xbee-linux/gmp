@@ -15,7 +15,7 @@ description: |
 var:
   version: 6.2.1
 
-dependencies:
+builders:
   - m4
   - texinfo
   - perl
