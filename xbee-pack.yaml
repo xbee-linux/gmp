@@ -21,9 +21,7 @@ builders:
   - perl
 
 provision:
-  - url:
-      from: https://ftp.gnu.org/gnu/gmp/gmp-{{ .version }}.tar.xz
-      todir: "{{ .xbee.src }}"
+  - url: https://ftp.gnu.org/gnu/gmp/gmp-{{ .version }}.tar.xz
   - env: PERL5LIB=/usr/share/texinfo:/usr/share/texinfo/lib/libintl-perl/lib:/usr/share/texinfo/lib/Text-Unidecode/lib:/usr/share/texinfo/lib/Unicode-EastAsianWidth/lib
 #   - shell: rm /lib/x86_64-linux-gnu/{libgmp.so.10,libgmp.so.10.4.0}
 
