@@ -1,7 +1,5 @@
 schema-version: 1.0
 
-type: builder
-
 description: |
   The GMP package contains math libraries. These have useful functions for arbitrary precision arithmetic.
 
@@ -16,7 +14,7 @@ var:
   xbee:
     version: 6.2.1
 
-builders:
+builder:
   - m4
   - texinfo
   - perl
